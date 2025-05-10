@@ -10,8 +10,10 @@ dependencies = [
     "uvicorn[standard]",
     "pydantic",
     "python-dotenv",
-    "pytest-asyncio"
+    "pytest-asyncio",
+    "fastapi-limiter",
+    "redis"
 ]
 
-[project.scripts]
-main = "app.main:main"
+[tool.uv]
+package = true

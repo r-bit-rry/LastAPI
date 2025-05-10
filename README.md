@@ -33,7 +33,7 @@ LastAPI/
 
 This project uses [UV](https://github.com/astral-sh/uv) for virtual environment and package management. UV is a very fast Python package installer and resolver, written in Rust, intended as a drop-in replacement for `pip` and `pip-tools` workflows.
 
-1.  **Install UV** (if you haven\'t already):
+1.  **Install UV and dependencies** (if you haven\'t already):
     Follow the instructions on the [official UV installation guide](https://github.com/astral-sh/uv#installation).
     For example, on macOS/Linux:
     ```bash
@@ -42,6 +42,10 @@ This project uses [UV](https://github.com/astral-sh/uv) for virtual environment 
     Or using pip (if you have an existing Python environment):
     ```bash
     pip install uv
+    ```
+    On Mac ARM64, we need to install redis-server:
+    ```bash
+    brew install redis
     ```
 
 2.  **Create a virtual environment and install dependencies**:
@@ -57,13 +61,21 @@ This project uses [UV](https://github.com/astral-sh/uv) for virtual environment 
 
 3.  **Run the FastAPI server**:
     Ensure your virtual environment is activated and you are in the `LastAPI` root directory.
+    Use `./start_server.sh`
+    or
     ```bash
+    redis-server --daemonize yes
     uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
     ```
     *   `app.main:app`: Points to the `app` instance in the `app/main.py` file.
     *   `--reload`: Enables auto-reloading when code changes (for development).
     *   `--host 0.0.0.0`: Makes the server accessible from your local network (and localhost).
     *   `--port 8000`: Runs the server on port 8000.
+
+    Ping Redis:
+    ```bash
+    redis-cli ping
+    ```
 
 4.  **Access the API**:
     *   API Docs (Swagger UI): [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
